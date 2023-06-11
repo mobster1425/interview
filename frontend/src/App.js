@@ -11,7 +11,7 @@ function App() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/v1/name",{
+      const response = await fetch("https://interview-backend-x6yp.onrender.com/api/v1/name",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ function App() {
 
   const handleGetNamesClick = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/name");
+      const response = await fetch("https://interview-backend-x6yp.onrender.com/api/v1/name");
       if (response.ok) {
         const names = await response.json();
         setNames(names);
