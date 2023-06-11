@@ -6,7 +6,11 @@ const cors=require('cors');
 
 const app=express();
 
-app.use(cors());
+const corsOptions={
+  origin:"https://interview-ghcl.onrender.com",//frontend url
+}
+
+app.use(cors(corsOptions));
 
 require('express-async-errors');
 
