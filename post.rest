@@ -1,0 +1,12 @@
+ POST http://localhost:5000/api/v1/name HTTP/1.1
+
+Content-Type: application/json
+
+
+always put a blank line here and also between content-type: application/json
+
+{
+
+ "name":"feyin feel",
+
+}
