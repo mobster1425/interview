@@ -1,0 +1,51 @@
+name: Interview Application CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.JS ${{matrix.node-version}}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+
+      - name: Install and Test Frontend
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm run start
+
+      - name: Install and Test Server
+        run: |
+          npm install
+          npm run server
+
+        env:
+          MONGODB_URI: ${{secrets.MONGODB_URI}}
+
+      - name: Deploy to frontend production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{secrets.SERVICE_ID_FRONTEND}}
+          api-key: ${{secrets.RENDER_API_KEY}}
+
+      - name: Deploy to backend production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{secrets.SERVICE_ID_BACKEND}}
+          api-key: ${{secrets.RENDER_API_KEY}}
